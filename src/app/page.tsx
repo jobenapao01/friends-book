@@ -7,9 +7,5 @@ export default async function Home() {
 	if (session) {
 		console.log(session.user);
 	}
-	return (
-		<main>
-			<SignIn />
-		</main>
-	);
+	return <main></main>;
 }
