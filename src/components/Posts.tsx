@@ -5,12 +5,14 @@ import { CardHeaderMotion, CardMotion, CardTitle } from './ui/card';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useGetPosts } from '@/data/getPosts';
 import Image from 'next/image';
-import { HeartIcon } from 'lucide-react';
+import { HeartIcon, Trash } from 'lucide-react';
 import { addLike } from '@/server/actions/addLike';
+import { deletePost } from '@/server/actions/deletePost';
 
 const Posts = () => {
 	const { data: posts, error: postError } = useGetPosts();
-	const { execute: executeAddLike, status } = useAction(addLike);
+	const { execute: executeAddLike } = useAction(addLike);
+	const { execute: executeDeletePost } = useAction(deletePost);
 
 	if (postError) return postError.message;
 
@@ -61,6 +63,15 @@ const Posts = () => {
 										<HeartIcon className='size-4 text-secondary-foreground' />
 										<p className='text-sm'>{post.likes.length}</p>
 									</div>
+
+									<Trash
+										className='size-4 text-red-600 cursor-pointer'
+										onClick={() =>
+											executeDeletePost({
+												id: post.id,
+											})
+										}
+									/>
 								</div>
 							</div>
 						</motion.div>
