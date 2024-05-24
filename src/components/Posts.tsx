@@ -5,9 +5,13 @@ import { CardHeaderMotion, CardMotion, CardTitle } from './ui/card';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useGetPosts } from '@/data/getPosts';
 import Image from 'next/image';
+import { HeartIcon } from 'lucide-react';
+import { addLike } from '@/server/actions/addLike';
 
 const Posts = () => {
 	const { data: posts, error: postError } = useGetPosts();
+	const { execute: executeAddLike, status } = useAction(addLike);
+
 	if (postError) return postError.message;
 
 	if (posts?.success) {
@@ -41,6 +45,24 @@ const Posts = () => {
 								<div className='items-center justify-center flex cursor-pointer'>...</div>
 							</div>
 							<p className='text-primary'>{post.content}</p>
+
+							{/* buttons section */}
+							<div className='flex gap-2 items-center justify-between'>
+								<div className='flex gap-4 items-center'>
+									<div
+										className='flex items-center gap-1 cursor-pointer'
+										onClick={() =>
+											executeAddLike({
+												postId: post.id,
+												userId: post.user.id as string,
+											})
+										}
+									>
+										<HeartIcon className='size-4 text-secondary-foreground' />
+										<p className='text-sm'>{post.likes.length}</p>
+									</div>
+								</div>
+							</div>
 						</motion.div>
 					))}
 				</AnimatePresence>
