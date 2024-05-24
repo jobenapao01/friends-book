@@ -36,6 +36,7 @@ const Posts = () => {
 							initial={{ opacity: 0 }}
 							exit={{ opacity: 0 }}
 						>
+							{/* author avatar */}
 							<div className='flex gap-2 items-center'>
 								<Image
 									src={post.user.image!}

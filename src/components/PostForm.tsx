@@ -11,6 +11,7 @@ import { Button } from './ui/button';
 import { createPost } from '@/server/actions/createPost';
 
 const PostForm = () => {
+	// define form schema
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -18,6 +19,7 @@ const PostForm = () => {
 		},
 	});
 
+	//server action function and checking
 	const { execute, status } = useAction(createPost, {
 		onSuccess(data) {
 			if (data?.error) console.log(data.error);
@@ -28,6 +30,7 @@ const PostForm = () => {
 		},
 	});
 
+	//handle submit form functionality
 	const handleSubmit = (values: z.infer<typeof formSchema>) => {
 		execute(values);
 		form.reset();

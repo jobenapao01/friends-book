@@ -7,6 +7,7 @@ export function SignIn() {
 				'use server';
 				await signIn('github');
 			}}
+			className='bg-white'
 		>
 			<button type='submit'>Signin with GitHub</button>
 		</form>

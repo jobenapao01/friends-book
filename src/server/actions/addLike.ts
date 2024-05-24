@@ -9,6 +9,7 @@ import { createSafeActionClient } from 'next-safe-action';
 
 const action = createSafeActionClient();
 
+// define like schema
 const addLikeSchema = z.object({
 	postId: z.string(),
 	userId: z.string(),
@@ -22,6 +23,7 @@ export const addLike = action(addLikeSchema, async ({ postId, userId }) => {
 		},
 	});
 
+	// check if post is already liked
 	if (existingLike) {
 		await prisma.like.deleteMany({
 			where: {
@@ -36,6 +38,7 @@ export const addLike = action(addLikeSchema, async ({ postId, userId }) => {
 		};
 	}
 
+	// check if post is not liked
 	if (!existingLike) {
 		try {
 			const like = await prisma.like.create({
