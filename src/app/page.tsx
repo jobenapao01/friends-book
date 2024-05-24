@@ -1,11 +1,12 @@
+import PostForm from '@/components/PostForm';
 import { SignIn } from '@/components/Sign-in';
 import { auth } from '@/server/auth';
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 
 export default async function Home() {
-	const session = await auth();
-
-	if (session) {
-		console.log(session.user);
-	}
-	return <main></main>;
+	return (
+		<main>
+			<PostForm />
+		</main>
+	);
 }
